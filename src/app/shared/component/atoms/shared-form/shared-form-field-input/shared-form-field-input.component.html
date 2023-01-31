@@ -1,0 +1,15 @@
+<ng-container *ngIf="!!parentForm; else withoutParentForm">
+  <mat-form-field [appearance]="appearance"  class="full-width">
+    <mat-label>{{label}}</mat-label>
+    <input [formControl]="parentForm" type="tel" matInput placeholder="{{placeholder}}">
+    <mat-icon matSuffix *ngIf="!!icon" color="{{color}}">{{icon}}</mat-icon>
+  </mat-form-field>
+</ng-container>
+
+<ng-template #withoutParentForm>
+  <mat-form-field [appearance]="appearance" class="full-width" >
+    <mat-label>{{label}}</mat-label>
+    <input type="tel" matInput placeholder="{{placeholder}}">
+    <mat-icon matSuffix *ngIf="!!icon" color="{{color}}">{{icon}}</mat-icon>
+  </mat-form-field>
+</ng-template>

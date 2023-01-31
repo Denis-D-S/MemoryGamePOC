@@ -1,0 +1,67 @@
+<!--TODO: MODIFICAÇÕES FEITAS AQUI -->
+<mat-toolbar
+  color="{{ color }}"
+  class="flex items-center justify-between lg:pl-[140px] lg:pr-[140px]"
+>
+  <!--    DIV ESQUERDA-->
+  <div class="left-div">
+    <img style="width: 50px; height: 50px;" src="{{ logo }}" alt="Logo Memory" />
+  </div>
+
+  <!--    DIV DIREITA-->
+  <div
+    class="lg:space-x-[20px] sm:space-x-3 flex items-center justify-center h-full"
+  >
+    <app-shared-button
+      text="ANUNCIE SEU ESPAÇO"
+      type="raised"
+      color="accent"
+      class="sm:block hidden"
+    >
+    </app-shared-button>
+
+    <app-shared-button
+      *ngIf="!isLoggedIn"
+      text="ENTRAR"
+      type="basic"
+      icon="perm_identity"
+      (click)="onLogin()"
+      class="color-primary sm:block hidden"
+    >
+    </app-shared-button>
+    <button
+      class="mt-5 sm:block hidden"
+      *ngIf="isLoggedIn"
+      [matMenuTriggerFor]="menu"
+    >
+      <img
+        src="https://source.unsplash.com/random/250X220"
+        alt=""
+        class="w-11 h-11"
+      />
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Minha conta</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>person_pin</mat-icon>
+        <span>Meus espaços</span>
+      </button>
+      <button mat-menu-item (click)="onLogout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Sair</span>
+      </button>
+    </mat-menu>
+    <app-shared-button
+      icon="menu"
+      type="mini-fab"
+      color="none"
+      class="sm:hidden block text-black -mt-12 drop-shadow-none"
+      (click)="toggleSideNav()"
+    >
+      ></app-shared-button
+    >
+  </div>
+</mat-toolbar>

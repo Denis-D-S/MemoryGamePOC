@@ -1,0 +1,23 @@
+<ng-container *ngIf="!!parentForm; else withoutParentForm">
+  <mat-form-field [appearance]="appearance" class="full-width" [attr.data-cy]="dataCy">
+    <mat-label>{{label}}</mat-label>
+    <mat-select [formControl]="parentForm" >
+      <mat-option *ngFor="let value of values" [value]="value.value">
+        {{value.description}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-container>
+
+<ng-template #withoutParentForm>
+  <mat-form-field [appearance]="appearance" class="full-width" [attr.data-cy]="dataCy">
+    <mat-label>{{label}}</mat-label>
+    <mat-select >
+      <mat-option *ngFor="let value of values"
+                  [value]="value.value"
+                  (click)="click(value)">
+        {{value.description}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>

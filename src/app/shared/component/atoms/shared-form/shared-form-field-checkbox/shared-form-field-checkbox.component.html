@@ -1,0 +1,13 @@
+<ng-container *ngIf="!!parentForm; else withoutParentForm">
+
+  <mat-checkbox color="{{ color }}">
+    <mat-label class="mat-body-1">{{ label }}</mat-label>
+    <mat-icon matSuffix *ngIf="!!value" color="{{ color }}">{{ value }}</mat-icon>
+  </mat-checkbox>
+</ng-container>
+
+<ng-template #withoutParentForm>
+  <mat-checkbox color="{{ color }}">
+    <mat-label class="mat-body-1">{{ label }}</mat-label>
+  </mat-checkbox>
+</ng-template>

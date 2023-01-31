@@ -1,0 +1,32 @@
+<div class="chip-list-wrapper">
+    <!--    <mat-chip-listbox>-->
+    <mat-chip-listbox>
+        <ng-container *ngFor="let chip of keywordSelected">
+            <mat-chip-option [id]="chip.value" color="{{color}}" (click)="removeChip(chip)" selected>
+                {{ chip.description | translate }}
+                <mat-icon class="mat-chip-remove">cancel</mat-icon>
+            </mat-chip-option>
+        </ng-container>
+    </mat-chip-listbox>
+</div>
+
+<mat-form-field class="full-width">
+    <input matInput type="text"
+           [placeholder]="placeholder"
+           [matAutocomplete]="auto"
+           [formControl]="controlInputFilter">
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-option *ngFor="let data of filteredData | async">
+        <div (click)="optionClicked($event, data)">
+            <mat-checkbox color="{{color}}"
+                          [checked]="isItemChecked(data)"
+                          (change)="toggleSelection(data)"
+                          (click)="$event.stopPropagation()">
+                {{ data.description }}
+            </mat-checkbox>
+        </div>
+    </mat-option>
+</mat-autocomplete>
+
