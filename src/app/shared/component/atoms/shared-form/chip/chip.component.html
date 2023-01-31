@@ -1,9 +1,0 @@
-<mat-chip-listbox>
-    <mat-chip-option color="{{color}}"
-              *ngFor="let keyword of keywords"
-              [value]="keyword"
-              (click)="addKeyword(keyword.value)"
-              [selected]="isSelected(keyword.value)">
-        {{keyword.description}}
-    </mat-chip-option>
-</mat-chip-listbox>
