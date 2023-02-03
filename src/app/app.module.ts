@@ -4,16 +4,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
+import {HomeComponent} from "./home/home.component";
+import {FlippingCardsComponent} from "./flipping-cards/flipping-cards.component";
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    FlippingCardsComponent
   ],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        MatSidenavModule
+        MatSidenavModule,
+
     ],
   providers: [],
   bootstrap: [AppComponent]

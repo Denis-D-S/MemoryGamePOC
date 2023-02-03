@@ -1,18 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AppComponent} from "./app.component";
-import {FlippingCardsComponent} from "./app/flipping-cards/flipping-cards.component";
+import {FlippingCardsComponent} from "./flipping-cards/flipping-cards.component";
+import {HomeComponent} from "./home/home.component";
+
+// const routes: Routes = [
+//   {
+//     path: '',
+//     component: AppComponent,
+//     children: [
+//       {
+//         path: 'flipping-cards',
+//         component: FlippingCardsComponent,
+//       }
+//     ],
+//   },
+// ];
 
 const routes: Routes = [
   {
     path: '',
-    component: AppComponent,
-    children: [
-      {
-        path: 'flipping-cards',
-        component: FlippingCardsComponent,
-      }
-    ],
+    component: HomeComponent,
+  },
+  {
+    path: 'flipping-cards',
+    component: FlippingCardsComponent,
   },
 ];
 
