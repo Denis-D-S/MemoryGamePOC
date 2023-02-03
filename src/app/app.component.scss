@@ -147,10 +147,11 @@ a{
 .mb-n15 {
   margin-bottom: -5px !important;
 }
-//.paragraph{
-//  padding:5% 10%;
-//  text-align:center;
-//}
+.paragraph{
+  //padding:5% 10%;
+  text-align:center;
+  font-size: 16px;
+}
 
 .content {
   background-image: url("../assets/images/animal-memory-game-cards-27510_3.png");
@@ -163,3 +164,141 @@ a{
 .twtr{
   margin-top:100px
 }.btn.twtr:after{content:"\1F426";padding-left:5px}
+
+
+ /////////////////////////////////////// copiando o CSS do pen code
+
+//
+//.grids {
+//  max-width: 136rem;
+//  margin: 0 auto;
+//  display: grid;
+//  grid-template-columns: 1fr 1fr 1fr;
+//  grid-column-gap: 3rem;
+//  grid-row-gap: 3rem;
+//}
+//
+//.card-one {
+//  grid-column: 1/4;
+//}
+//
+//card__side {
+//  transition: all 0.8s ease;
+//  color: white;
+//  font-size: 2rem;
+//  position: absolute;
+//  top: 0;
+//  left: 0;
+//  height: 25rem;
+//  width: 100%;
+//  backface-visibility: hidden;
+//  box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.4);
+//  border-radius: 8px;
+//}
+//
+//.card__side--front {
+//  background-color: #2196f3;
+//  position: relative;
+//  background-position: center;
+//  background-repeat: no-repeat;
+//  background-size: cover;
+//}
+//
+//
+//.text-box {
+//  position: absolute;
+//  top: 50%;
+//  left: 50%;
+//  transform: translate(-50%, -50%);
+//  text-align: center;
+//  width: 100%;
+//}
+//
+//.text-box-top {
+//  font-size: 2.2rem;
+//  text-shadow: 2px 2px 10px #0000006c;
+//  font-weight: 400;
+//}
+//
+//.text-box-middle {
+//  font-size: 5.5rem;
+//  font-weight: 700;
+//  text-shadow: 2px 2px 10px #0000006c;
+//}
+//
+//.text-box-lower {
+//  font-size: 2rem;
+//  text-shadow: 2px 2px 10px #0000006c;
+//  font-weight: 400;
+//}
+//
+//
+//.card__side {
+//  transition: all 0.8s ease;
+//  color: white;
+//  font-size: 2rem;
+//  position: absolute;
+//  top: 0;
+//  left: 0;
+//  height: 25rem;
+//  width: 100%;
+//  backface-visibility: hidden;
+//  box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.4);
+//  border-radius: 8px;
+//}
+//
+//.card__side--front {
+//  background-color: #2196f3;
+//  position: relative;
+//  background-position: center;
+//  background-repeat: no-repeat;
+//  background-size: cover;
+//}
+//
+//.card__side--back {
+//  background-color: #303f9f;
+//  transform: rotateY(180deg);
+//  background-position: center;
+//  background-repeat: no-repeat;
+//  background-size: cover;
+//}
+
+
+//////////////////////////////////////////////////////// TENTATIVA CHAT GPT:
+
+
+.card {
+  width: 100px;
+  height: 100px;
+  float: left;
+  background-color: lightgray;
+}
+.showGreen {
+  background-color: green;
+}
+.showRed {
+  background-color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
