@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {AppComponent} from "./app.component";
 import {FlippingCardsComponent} from "./flipping-cards/flipping-cards.component";
 import {HomeComponent} from "./home/home.component";
+import {OneFlippingCardComponent} from "./one-flipping-card/one-flipping-card.component";
 
 // const routes: Routes = [
 //   {
@@ -26,6 +27,10 @@ const routes: Routes = [
     path: 'flipping-cards',
     component: FlippingCardsComponent,
   },
+  {
+    path: 'one-flipping-card',
+    component: OneFlippingCardComponent,
+  }
 ];
 
 @NgModule({

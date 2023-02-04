@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {HomeComponent} from "./home/home.component";
 import {FlippingCardsComponent} from "./flipping-cards/flipping-cards.component";
+import { OneFlippingCardComponent } from './one-flipping-card/one-flipping-card.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    FlippingCardsComponent
+    FlippingCardsComponent,
+    OneFlippingCardComponent
   ],
     imports: [
         BrowserModule,
