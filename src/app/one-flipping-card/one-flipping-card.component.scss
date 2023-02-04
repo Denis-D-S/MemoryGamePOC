@@ -341,11 +341,13 @@ body {
 
 .front {
   background-color: blue;
+  text-align: center;
 }
 
 .back {
   transform: rotateY(180deg);
   background-color: red;
+  text-align: center;
 }
 
 .flip {
