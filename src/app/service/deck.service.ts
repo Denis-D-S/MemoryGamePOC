@@ -5,7 +5,6 @@ import {data} from "../data/data";
   providedIn: 'root'
 })
 export class DeckService {
-
   constructor() { }
 
   getDeckById(id: string): Deck | undefined {

@@ -25,7 +25,6 @@ export class SidenavComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this._deckStore.fetchPlaces('analysing');
     console.log('sidenav init')
   }
 
