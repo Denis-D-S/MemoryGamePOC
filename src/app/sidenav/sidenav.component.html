@@ -1,0 +1,50 @@
+
+<!--PQ O PADDING TOP ABAIXO NÃO FUNCIONA???? PQ EU PRECISO CRIAR UMA DIV QUE ENGLOBE TUDO PARA O TAILWIND COMEÇAR A FUNCIONAR?-->
+<!--E PQ, QUANDO COLOCO UMA DIV QUE ENGLOBA TUDO, BOTÕES DO MATERIAL DESAPARECEM???-->
+  <mat-drawer-container class="w-full h-full pt-[40px]">
+    <mat-drawer mode="side" opened class="container-menu h-[330px] w-[338px]">
+      <h3 class="mt-[20px] mr-[64px]">Selecione a sua dificuldade</h3>
+
+      <div class="divPai flex flex-col mt-[50px] gap-[8px]">
+        <button mat-button
+                (click)="onButtonClick('easy')"
+                [ngClass]="{ selected: selectedButton === 'easy' }"
+                [routerLink]="['easy']"
+                color="primary"
+                icon="campaign_outlined">
+          EASY DIFFFICULTY
+        </button>
+        <button mat-button
+                [routerLink]="['normal']"
+                (click)="onButtonClick('normal')"
+                [ngClass]="{ selected: selectedButton === 'normal' }"
+                color="primary"
+                icon="person_outlined">
+          NORMAL DIFFICULTY
+        </button>
+        <button mat-button
+                (click)="onButtonClick('hard')"
+                [ngClass]="{ selected: selectedButton === 'hard' }"
+                [routerLink]="['hard']"
+                color="primary"
+                icon="calendar_today">
+          HARD DIFFICULTY
+        </button>
+        <button mat-button
+                (click)="onButtonClick('score')"
+                [ngClass]="{ selected: selectedButton === 'score' }"
+                [routerLink]="['score']"
+                color="primary"
+                icon="payments_outlined">
+          SEE YOUR SCORE AND STATS
+        </button>
+      </div>
+    </mat-drawer>
+
+    <mat-drawer-content class="pl-[76px]">
+      AQUI TEMOS QUE COLOCAR A CHAMADA DO COMPONENTE QUE VAI RODAR O JOGO...
+      <app-deck-screen></app-deck-screen>
+    </mat-drawer-content>
+
+  </mat-drawer-container>
+
