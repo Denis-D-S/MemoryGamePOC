@@ -1,5 +1,6 @@
 
-class Card{
+//MODEL DE COMO UM "CARD" DEVE SER (tipo um 'DTO'):
+export class Card{
   id: string; //se não colocarmos o construtor, fica aparecendo erro querendo que coloque "| undefined" em cada variáve. AO criar o construtor, estamos inicializando a variável, daí ela não pode mais ser undefined.
   name: string;
   text?: string;

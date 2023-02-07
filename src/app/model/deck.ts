@@ -1,6 +1,8 @@
 
-class Deck{
+//MODEL DE COMO UM "DECK" DEVE SER (tipo um 'DTO'):
+import {CardPair} from "./card-pair";
 
+export class Deck{
   id: string;
   name: string;
   cardsPairs: CardPair[];

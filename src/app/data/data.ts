@@ -1,3 +1,6 @@
+import {Deck} from "../model/deck";
+import {CardPair} from "../model/card-pair";
+import {Card} from "../model/card";
 
 interface iData{
   cards: Card[];
@@ -5,6 +8,9 @@ interface iData{
   decks: Deck[];
 }
 
+//STUBS ABAIXO:
+
+//stubs dos cards...
 const cards: Card[] = [
   new Card(
     '1','car1','car', undefined  //card 1 casa com card2
@@ -25,6 +31,8 @@ const cards: Card[] = [
     '6','bird2','bird', undefined
   ),
 ];
+
+//stubs dos cardPairs...
 const cardPairs: CardPair[] = [
   new CardPair(
     '1', cards[0], cards[1], //o array aqui é do cards que criamos acima...
@@ -36,9 +44,11 @@ const cardPairs: CardPair[] = [
     '3', cards[4], cards[5],
   ),
 ];
+
+//stubs dos decks...
 const decks: Deck[] = [
   new Deck(
-    '1', 'deck', cardPairs
+    '1', 'deck', cardPairs  //e este objeto decks aqui contém todos os cardPairs que criamos...
   )
 ];
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {data} from "../data/data";
+import {Deck} from "../model/deck";
 
 @Injectable({
   providedIn: 'root'

@@ -11,6 +11,7 @@ import {SidenavComponent} from "./sidenav/sidenav.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatButtonModule} from "@angular/material/button";
+import { DeckScreenComponent } from './deck-screen/deck-screen.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {MatButtonModule} from "@angular/material/button";
     FlippingCardsComponent,
     OneFlippingCardComponent,
     SidenavComponent,
+    DeckScreenComponent,
   ],
   imports: [
     BrowserModule,

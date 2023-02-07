@@ -1,5 +1,8 @@
 
-class CardPair{
+//MODEL DE COMO UM "CARD PAIR" DEVE SER (tipo um 'DTO'):
+import {Card} from "./card";
+
+export class CardPair{
   id: string;
   card1: Card;
   card2: Card;
