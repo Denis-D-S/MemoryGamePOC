@@ -15,10 +15,10 @@ export class DeckScreenComponent implements OnInit {
   id: string = '1' // depois pegar da rota
   deckString = JSON.stringify(this.deckService.getDeckById(this.id), null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...
 
-  // cardPairString = JSON.stringify(this.deckService.getDeckById(this.id)?.cardsPairs[0], null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...
+  cardPairString2 = JSON.stringify(this.deckService.getDeckById(this.id)?.cardsPairs[0], null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...
   cardPairString = JSON.stringify(this.cardPairService.getCardPairById(this.id), null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...))
 
-  // cardString = JSON.stringify(this.deckService.getDeckById(this.id)?.cardsPairs[0].card1, null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...
+  cardString2 = JSON.stringify(this.deckService.getDeckById(this.id)?.cardsPairs[0].card1, null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...
   cardString = JSON.stringify(this.cardService.getCardById(this.id), null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...))
 
 
@@ -42,18 +42,5 @@ export class DeckScreenComponent implements OnInit {
     console.log('Imprimindo card: ')
     console.log(card);
   }
-
-
-
-  //QUAL A DIFERENÇA ENTRE O CÓDIGO ACIMA E O CÓDIGO ABAIXO? É PRECISO MESMO CRIAR UM 'new DeckService()'?
-
-  // deckId: string = '1' // depois pegar da rota (este '1' é um stub temporário).
-  //
-  // deckService: DeckService = new DeckService();
-  //
-  // ngOnInit() {
-  //   this.deckService.getDeckById(this.deckId);
-  //   console.log(this.deckService.getDeckById(this.deckId));
-  // }
 
 }
