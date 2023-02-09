@@ -1,5 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {DeckService} from "../service/deck.service";
+import {DeckService} from "../service/deck-service/deck.service";
+import {Deck} from "../model/deck";
+import {CardPair} from "../model/card-pair";
+import {Card} from "../model/card";
+import {CardPairService} from "../service/cardPair-service/card-pair.service";
+import {CardService} from "../service/card-service/card.service";
 
 @Component({
   selector: 'app-deck-screen',
@@ -7,24 +12,48 @@ import {DeckService} from "../service/deck.service";
   styleUrls: ['./deck-screen.component.scss']
 })
 export class DeckScreenComponent implements OnInit {
+  id: string = '1' // depois pegar da rota
+  deckString = JSON.stringify(this.deckService.getDeckById(this.id), null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...
 
-  //sempre que eu chamo o import desse cara abaixo, dá erro lá no "data.ts", e o STUB passa a parar de funcionar...
-  // constructor(private deckService: DeckService) {
-  // }
-  //
-  // ngOnInit() {
-  //   const deckId = '1' // depois pegar da rota
-  //   const deck: Deck = this.deckService.getDeckById(deckId);
-  //   console.log(deck);
-  // }
+  // cardPairString = JSON.stringify(this.deckService.getDeckById(this.id)?.cardsPairs[0], null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...
+  cardPairString = JSON.stringify(this.cardPairService.getCardPairById(this.id), null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...))
 
-  deckId: string = '1' // depois pegar da rota (este '1' é um stub temporário).
+  // cardString = JSON.stringify(this.deckService.getDeckById(this.id)?.cardsPairs[0].card1, null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...
+  cardString = JSON.stringify(this.cardService.getCardById(this.id), null, 4); //criei este cara só para conseguir imprimir o JSON no template html. E NÃO ESTÁ FUNCIONANDO A FORMATAÇÃO DE JSON QUE EU QUERIA COLOCAR...))
 
-  deckService: DeckService = new DeckService();
+
+  constructor(
+    public deckService: DeckService,
+    public cardPairService: CardPairService,
+    public cardService: CardService,
+    ) { //tive que mudar este cara para 'public' para poder usar o 'deckService' no template html
+  }
 
   ngOnInit() {
-    this.deckService.getDeckById(this.deckId);
-    console.log(this.deckService.getDeckById(this.deckId));
+    const deck: Deck | undefined = this.deckService.getDeckById(this.id);
+    console.log('Imprimindo deck: ')
+    console.log(deck);
+
+    const cardPair: CardPair | undefined = this.cardPairService.getCardPairById(this.id);
+    console.log('Imprimindo cardPair: ')
+    console.log(cardPair);
+
+    const card: Card | undefined = this.cardService.getCardById(this.id);
+    console.log('Imprimindo card: ')
+    console.log(card);
   }
+
+
+
+  //QUAL A DIFERENÇA ENTRE O CÓDIGO ACIMA E O CÓDIGO ABAIXO? É PRECISO MESMO CRIAR UM 'new DeckService()'?
+
+  // deckId: string = '1' // depois pegar da rota (este '1' é um stub temporário).
+  //
+  // deckService: DeckService = new DeckService();
+  //
+  // ngOnInit() {
+  //   this.deckService.getDeckById(this.deckId);
+  //   console.log(this.deckService.getDeckById(this.deckId));
+  // }
 
 }

@@ -2,6 +2,13 @@ import {Deck} from "../model/deck";
 import {CardPair} from "../model/card-pair";
 import {Card} from "../model/card";
 
+//DICA: nesta classe estamos criando um STUB. Precisamos primeiro povoar o STUB com dados, e depois precisamos
+// guardar o STUB em uma variável. Esta variável deve ser EXPORTADA para fora dessa classe "data.ts".
+
+
+//pq precisamos dessa 'interface' abaixo?
+//R: esta interface é apenas um mapa do que precisa ser criado. Tudo em uma interface precisa ser herdado.
+// Então esta interface basicamente fala que "precisa ter cards, cardPairs e decks", obrigatoriamente.
 interface iData{
   cards: Card[];
   cardPairs: CardPair[];
@@ -53,6 +60,9 @@ const decks: Deck[] = [
 ];
 
 
+//A variável abaixo é a constante que será EXPORTADA para fora dessa classe data.ts.
+//Esta variável é um objeto que contém todos os stubs que criamos acima. Note que ela herda a interface iData, que contém
+// o "mapa" de todos os campos que precisam ser criados.
 export const data: iData = {
   cards: cards,
   cardPairs: cardPairs,
