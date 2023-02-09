@@ -1,0 +1,57 @@
+<!--LINK DO CODE PAIN DE ONDE TIREI ESTE TEMPLATE: https://codepen.io/trooperandz/pen/YRpKjo -->
+
+<div class="grid-container">
+
+<!--  ESTE HEADER É TEMPORÁRIO E TÁ BEM RUIM! FAÇA UM HEADER COMPONENTE SEPARADO! -->
+  <header class="header">
+    <input class="header__search" placeholder="Search..." >
+    <div class="header__avatar">Your face logo...</div>
+  </header>
+
+  <aside class="sidenav">
+    <div>
+      IMAGEM ÍCONE AQUI
+    </div>
+
+
+    <ul class="sidenav__list">
+      <li class="sidenav__list-item ">Choose your difficulty: </li>
+      <li class="sidenav__list-item">Very easy</li>
+      <li class="sidenav__list-item">Easy</li>
+      <li class="sidenav__list-item">Normal</li>
+      <li class="sidenav__list-item">Hard</li>
+      <li class="sidenav__list-item">Very Hard</li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="main-header m-[20px] p-[20px] min-h-[150px]">
+
+      CARDS AQUI!!!! GERADOS VIA NGFOR
+
+      <div *ngIf="deckService.getDeckById('1') as deck" class="pb-[80px] pt-[80px]">
+        <h3>O deck é: {{deck.toString()}}</h3>
+      </div>
+
+      <div *ngIf="deckString as deck" class="pb-[80px]">
+        <h3>O deck é: {{deck}}</h3>
+      </div>
+
+      <div *ngIf="cardPairString as cardPair" class="pb-[80px]">
+        <h3>O cardPair é: {{cardPair}}</h3>
+      </div>
+
+      <div *ngIf="cardString as card" class="pb-[80px]">
+        <h3>O card é: {{card}}</h3>
+      </div>
+
+    </div>
+
+  </main>
+
+<!--  ESTE FOOTER É TEMPORÁRIO E ESTÁ BEM RUIM! FAÇA UM FOOTER COMPONENTE SEPARADO! -->
+  <footer class="footer">
+    <div class="footer__copyright">&copy; 2023</div>
+    <div class="footer__signature">Made with love</div>
+  </footer>
+</div>

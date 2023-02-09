@@ -5,6 +5,7 @@ import {FlippingCardsComponent} from "./flipping-cards/flipping-cards.component"
 import {HomeComponent} from "./home/home.component";
 import {OneFlippingCardComponent} from "./one-flipping-card/one-flipping-card.component";
 import {SidenavComponent} from "./sidenav/sidenav.component";
+import {Sidenav2Component} from "./sidenav2/sidenav2.component";
 
 // const routes: Routes = [
 //   {
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path: 'sidenav',
     component: SidenavComponent,
+  },
+  {
+    path: 'sidenav2',
+    component: Sidenav2Component,
   }
 ];
 
