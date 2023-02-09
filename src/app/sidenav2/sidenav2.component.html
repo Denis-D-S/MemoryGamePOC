@@ -30,19 +30,19 @@
       CARDS AQUI!!!! GERADOS VIA NGFOR
 
       <div *ngIf="deckService.getDeckById('1') as deck" class="pb-[80px] pt-[80px]">
-        <h3>O deck é: {{deck.toString()}}</h3>
-      </div>
-
-      <div *ngIf="deckString as deck" class="pb-[80px]">
         <h3>O deck é: {{deck}}</h3>
       </div>
 
+      <div *ngIf="deckString as deck" class="pb-[80px]">
+        <pre>O deck é: {{deck}}</pre>
+      </div>
+
       <div *ngIf="cardPairString as cardPair" class="pb-[80px]">
-        <h3>O cardPair é: {{cardPair}}</h3>
+        <pre>O cardPair é: {{cardPair}}</pre>
       </div>
 
       <div *ngIf="cardString as card" class="pb-[80px]">
-        <h3>O card é: {{card}}</h3>
+        <pre>O card é: {{card}}</pre>
       </div>
 
     </div>

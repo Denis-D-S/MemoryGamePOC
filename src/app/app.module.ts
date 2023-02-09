@@ -13,6 +13,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatButtonModule} from "@angular/material/button";
 import { DeckScreenComponent } from './deck-screen/deck-screen.component';
 import { Sidenav2Component } from './sidenav2/sidenav2.component';
+import { GamePageComponent } from './game-page/game-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { Sidenav2Component } from './sidenav2/sidenav2.component';
     SidenavComponent,
     DeckScreenComponent,
     Sidenav2Component,
+    GamePageComponent,
   ],
   imports: [
     BrowserModule,

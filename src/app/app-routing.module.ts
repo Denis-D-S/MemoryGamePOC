@@ -6,6 +6,7 @@ import {HomeComponent} from "./home/home.component";
 import {OneFlippingCardComponent} from "./one-flipping-card/one-flipping-card.component";
 import {SidenavComponent} from "./sidenav/sidenav.component";
 import {Sidenav2Component} from "./sidenav2/sidenav2.component";
+import {GamePageComponent} from "./game-page/game-page.component";
 
 // const routes: Routes = [
 //   {
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: 'sidenav2',
     component: Sidenav2Component,
+  },
+  {
+    path: 'game/:deckId', //esta é a técnica/método básico para conseguirmos pegar o id de uma URL... além disso usamos o ActivatedRoute no construtor do GamePageCOomponent...
+    component: GamePageComponent,
   }
 ];
 
