@@ -1,2 +1,3 @@
 # MemoryGamePOC
 Criando um jogo da memória para treinar...
+(Repo compartilhado Dênis e Roddrigo)
