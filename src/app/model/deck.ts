@@ -14,16 +14,23 @@ export class Deck{
     this.cardsPairs = cardsPairs;
   }
 
+  //MÉTODO PARA RETORNAR TODAS AS CARTAS DE UM DECK:
   getCards(): Card[] {
     //criar lista de cards
     const cards: Card[] = [];
     //iterar pela lista de pares de cards
-    for (let i = 0; i < this.cardsPairs.length; i++){
-      const pair = this.cardsPairs[i];
+    this.cardsPairs.map((pair) => {
       //para cada par, colocar suas cartas na lista de cartas.
       cards.push(pair.card1);
       cards.push(pair.card2);
-    }
+    });
+    // dá pra fazer o código acima também usando um loop "for" clássico ao invés de "map"...
+    // for (let i = 0; i < this.cardsPairs.length; i++){
+    //   const pair = this.cardsPairs[i];
+    //   //para cada par, colocar suas cartas na lista de cartas.
+    //   cards.push(pair.card1);
+    //   cards.push(pair.card2);
+    // }
     //retornar a lista de cartas.
     return cards;
   }

@@ -1,9 +1,11 @@
-<p>game-page works!</p>
 
-<p>deckId: {{deckId}}</p>
+<p>A variável deckId (sendo capturada da URL) é: {{deckId}}</p>
 
-<p>deckName: {{deck?.name}}</p>
+<p>O 'deckName' (um dos atributos do Objeto 'Deck') é: {{deck?.name}}</p>
 
+<pre>O 'cardPairs' (um dos atributos do Objeto 'Deck') é: {{this.cardPairs}}</pre>
+
+<p>As cartas presentes dentro deste nosso deck de id '1' são as seguintes: </p>
 <p *ngFor = 'let card of cards'>
   {{card.name}}
 </p>
