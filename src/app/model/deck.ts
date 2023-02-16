@@ -19,7 +19,7 @@ export class Deck{
     //criar lista de cards
     const cards: Card[] = [];
     //iterar pela lista de pares de cards
-    this.cardsPairs.map((pair) => {
+    this.cardsPairs.forEach((pair) => {
       //para cada par, colocar suas cartas na lista de cartas.
       cards.push(pair.card1);
       cards.push(pair.card2);

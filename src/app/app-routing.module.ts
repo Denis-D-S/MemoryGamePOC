@@ -27,19 +27,19 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'flipping-cards',
+    path: 'flipping-cards',  //teste que fiz com 2 cards virando
     component: FlippingCardsComponent,
   },
   {
-    path: 'one-flipping-card',
+    path: 'one-flipping-card', //teste que estava fazendo com 1 card apenas...
     component: OneFlippingCardComponent,
   },
   {
-    path: 'sidenav',
+    path: 'sidenav', //teste que fiz com sidenav que deu errado (shared e mais um monte de coisas)
     component: SidenavComponent,
   },
   {
-    path: 'sidenav2',
+    path: 'sidenav2', //teste que fiz com sidenav que até é utilizável, mas precisa de mais trabalho
     component: Sidenav2Component,
   },
   {

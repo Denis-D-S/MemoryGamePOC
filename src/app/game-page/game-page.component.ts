@@ -15,12 +15,10 @@ import {CardPair} from "../model/card-pair";
 export class GamePageComponent implements OnInit {
 
   deckId: string | null | undefined;
-
   cardPairs: string | undefined;
-
   deck: Deck | undefined;
-
   cards: Card[] = [];
+  cardIsFlipped: boolean[] = [];
 
   constructor(
     private route: ActivatedRoute, //este cara "ActivatedRoute" é usado para capturar valores da URL...
@@ -42,8 +40,34 @@ export class GamePageComponent implements OnInit {
         this.cards = this.deck!.getCards(); //criamos um método especial que permite pegar as cartas presentes em cada deck...
         //agora a variável "cards" está povoada com todos os cards... basta fazer um "*ngFor" no HTML para imprimir todos os cards...
         console.log(this.cards);
+
+        this.cardIsFlipped = this.cards.map(() => false);
+
       }
+
     });
   }
+
+
+  flipCard(index: number): void{
+    this.cardIsFlipped[index] = !this.cardIsFlipped[index]; //isso faz a carta virar, false para true...
+  }
+
+  checkIfMatch(){
+    //checcar se deu match
+    //dando match ou não, 2 cartas é o máximo permitido,
+    //ou pontuar
+    //ou ele vai virar de volta
+
+  }
+
+
+  //TODO: proxima aula:
+  //lá na função flipcards...
+  //teremos de criar um contador para a quantidade de cartas viradas
+  // criar uma variável de condição "saber se pode virar". E isso vai estar dentro do if
+  // SE PODE VIRAR, então vai fazer o que está fazendo na linha 53, se não não vai fazer nada
+  //para impedir que o usuário possa sair clicando em todas as caras, no máximo pode ser 2.
+
 
 }
