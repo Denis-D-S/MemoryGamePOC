@@ -69,11 +69,4 @@ export class GamePageComponent implements OnInit {
     return
   }
 
-
-  //TODO: continuar fazendo...
-  // criar uma variável de condição "saber se pode virar". E isso vai estar dentro do if
-  // SE PODE VIRAR, então vai fazer o que está fazendo na linha 53, se não não vai fazer nada
-  //para impedir que o usuário possa sair clicando em todas as caras, no máximo pode ser 2.
-
-
 }
