@@ -62,7 +62,7 @@ export class GamePageComponent implements OnInit {
   }
 
 
-  //TODO: proxima aula:
+  //TODO: continuar fazendo...
   //lá na função flipcards...
   //teremos de criar um contador para a quantidade de cartas viradas
   // criar uma variável de condição "saber se pode virar". E isso vai estar dentro do if
