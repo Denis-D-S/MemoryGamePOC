@@ -41,7 +41,7 @@ export class GamePageComponent implements OnInit {
         //agora a variável "cards" está povoada com todos os cards... basta fazer um "*ngFor" no HTML para imprimir todos os cards...
         console.log(this.cards);
 
-        this.cardIsFlipped = this.cards.map(() => false);
+        this.cardIsFlipped = this.cards.map(() => false); //os cards começam como "false", ou seja "não estão flipped".
 
       }
 
@@ -50,21 +50,27 @@ export class GamePageComponent implements OnInit {
 
 
   flipCard(index: number): void{
-    this.cardIsFlipped[index] = !this.cardIsFlipped[index]; //isso faz a carta virar, false para true...
+    if (this.canFlip()) { //se este método retornar "true", então..
+      this.cardIsFlipped[index] = !this.cardIsFlipped[index]; //isso faz a carta virar, false para true...
+    }
   }
 
-  checkIfMatch(){
-    //checcar se deu match
-    //dando match ou não, 2 cartas é o máximo permitido,
-    //ou pontuar
-    //ou ele vai virar de volta
+  canFlip(): boolean{
+    const flipedCards: boolean[] = this.cardIsFlipped.filter(c => c);
+    const numberOfCardsFlipped: number = flipedCards.length;
+    const canFlip: boolean = numberOfCardsFlipped < 2; //se não houverem mais de 2 cartas viradas, então... true...
+    return canFlip; //retorna true
+  }
 
+  isMatch(): boolean{
+
+    //TODO: TERMINAR ESTE MÉTODO E CONTINUAR DAQUI
+
+    return
   }
 
 
   //TODO: continuar fazendo...
-  //lá na função flipcards...
-  //teremos de criar um contador para a quantidade de cartas viradas
   // criar uma variável de condição "saber se pode virar". E isso vai estar dentro do if
   // SE PODE VIRAR, então vai fazer o que está fazendo na linha 53, se não não vai fazer nada
   //para impedir que o usuário possa sair clicando em todas as caras, no máximo pode ser 2.
