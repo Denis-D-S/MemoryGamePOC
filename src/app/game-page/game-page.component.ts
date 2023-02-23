@@ -19,6 +19,7 @@ export class GamePageComponent implements OnInit {
   deck: Deck | undefined;
   cards: Card[] = [];
   cardIsFlipped: boolean[] = [];
+  private score: Number | undefined;
 
   constructor(
     private route: ActivatedRoute, //este cara "ActivatedRoute" é usado para capturar valores da URL...
@@ -52,6 +53,9 @@ export class GamePageComponent implements OnInit {
   flipCard(index: number): void{
     if (this.canFlip()) { //se este método retornar "true", então..
       this.cardIsFlipped[index] = !this.cardIsFlipped[index]; //isso faz a carta virar, false para true...
+      if (this.isMatch()){
+        this.score++;
+      }
     }
   }
 
@@ -60,11 +64,12 @@ export class GamePageComponent implements OnInit {
     const numberOfCardsFlipped: number = flipedCards.length;
     const canFlip: boolean = numberOfCardsFlipped < 2; //se não houverem mais de 2 cartas viradas, então... true...
     return canFlip; //retorna true
+
   }
 
   isMatch(): boolean{
 
-    //TODO: TERMINAR ESTE MÉTODO E CONTINUAR DAQUI
+    //TODO: TERMINAR ESTE MÉTODO E CONTINUAR DAQUI... SABER SE DEU MATCH PARA ENTÃO PONTUAR.
 
     return
   }
