@@ -1,9 +1,8 @@
-
 //MODEL DE COMO UM "DECK" DEVE SER (tipo um 'DTO'):
-import {CardPair} from "./card-pair";
-import {Card} from "./card";
+import { CardPair } from './card-pair';
+import { Card } from './card';
 
-export class Deck{
+export class Deck {
   id: string;
   name: string;
   cardsPairs: CardPair[];
@@ -35,5 +34,8 @@ export class Deck{
     return cards;
   }
 
-
+  isPair(a: Card, b: Card): boolean {
+    // chamar o isPair para todos os cards pairs
+    throw new Error('Not Implemented');
+  }
 }

@@ -1,25 +1,36 @@
+<h2>Score: {{ score }}</h2>
 
-<p>A variável deckId (sendo capturada da URL) é: {{deckId}}</p>
-
-<p>O 'deckName' (um dos atributos do Objeto 'Deck') é: {{deck?.name}}</p>
-
-<pre>O 'cardPairs' (um dos atributos do Objeto 'Deck') é: {{this.cardPairs}}</pre>
-
-<p>As cartas presentes dentro deste nosso deck de id '1' são as seguintes: </p>
-
-
-
-<div *ngFor='let card of cards; index as i'>
-      <!--  CARD -->
-      <div class="card">
-        <div
-          class="card-content"
-          (click)="flipCard(i)"
-          [ngClass]="{'front': cardIsFlipped[i] , 'back': !cardIsFlipped[i]}">
-          {{card.name}}
-        </div>
+<div class="cards-container">
+  <div *ngFor="let card of cards; index as i">
+    <!--  CARD -->
+    <div class="card">
+      <div
+        class="card-content"
+        (click)="onCardClicked(i)"
+        [ngClass]="{ front: cardIsFlipped[i], back: !cardIsFlipped[i] }"
+      >
+        {{ card.name }}
       </div>
+    </div>
+  </div>
 </div>
 
+<div class="cards-container">
+  <span *ngFor="let cif of cardIsFlipped">{{ cif }},</span>
+</div>
+
+<div class="cards-container">
+  <span *ngFor="let i of selectedCardIndexes">{{ i }},</span>
+</div>
+
+<p>A variável deckId (sendo capturada da URL) é: {{ deckId }}</p>
+
+<p>O 'deckName' (um dos atributos do Objeto 'Deck') é: {{ deck?.name }}</p>
+
+<pre>
+O 'cardPairs' (um dos atributos do Objeto 'Deck') é: {{ this.cardPairs }}</pre
+>
+
+<p>As cartas presentes dentro deste nosso deck de id '1' são as seguintes:</p>
 
 <!--TODO: CRIE OS CARDS AQUI, PEGANDO OS ITENS DO DECK E MOSTRANDO O NOME DE CADA UM -->

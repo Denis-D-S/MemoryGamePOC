@@ -16,9 +16,21 @@ export class GamePageComponent implements OnInit {
   deckId: string | null | undefined;
   cardPairs: string | undefined;
   deck: Deck | undefined;
-  cards: Card[] = [];
-  cardIsFlipped: boolean[] = [];
-  private score: number;
+  cards: Card[] = []; /** length: 6 */
+  cardIsFlipped: boolean[] = []; /** length: 6 */
+  score: number;
+
+  get selectedCardIndexes(): number[] {
+    const arr = this.cardIsFlipped
+      .map((_, index) => index)
+      .filter((valor) => this.cardIsFlipped[valor]);
+    console.log('selectedCardIndexes', arr);
+    return arr;
+  }
+
+  get flipedCardsCount(): number {
+    return this.cardIsFlipped.filter((c) => c).length;
+  }
 
   constructor(
     private route: ActivatedRoute, //este cara "ActivatedRoute" é usado para capturar valores da URL...
@@ -50,25 +62,50 @@ export class GamePageComponent implements OnInit {
     });
   }
 
-  flipCard(index: number): void {
+  /** Método chamado quando o card é clicado */
+  onCardClicked(index: number): void {
     if (this.canFlip()) {
-      //se este método retornar "true", então..
-      this.cardIsFlipped[index] = !this.cardIsFlipped[index]; //isso faz a carta virar, false para true...
-      if (this.isMatch()) {
-        this.score++;
+      this.flipCard(index);
+
+      if (this.flipedCardsCount === 2) {
+        const isMatch = this.isMatch();
+        console.log('Deu Match: ', isMatch);
+
+        if (isMatch) {
+          this.score++;
+        }
       }
+    } else {
+      console.log('Deve desvirar as cartas');
     }
   }
 
+  flipCard(index: number): void {
+    this.cardIsFlipped[index] = !this.cardIsFlipped[index]; //isso faz a carta virar, false para true..
+  }
+
   canFlip(): boolean {
-    const flipedCards: boolean[] = this.cardIsFlipped.filter((c) => c);
-    const numberOfCardsFlipped: number = flipedCards.length;
-    const canFlip: boolean = numberOfCardsFlipped < 2; //se não houverem mais de 2 cartas viradas, então... true...
+    const canFlip: boolean = this.flipedCardsCount < 2; //se não houverem mais de 2 cartas viradas, então... true...
     return canFlip; //retorna true
   }
 
   isMatch(): boolean {
     //TODO: TERMINAR ESTE MÉTODO E CONTINUAR DAQUI... SABER SE DEU MATCH PARA ENTÃO PONTUAR.
+    console.log('chamou isMatch');
+    const indexA = this.selectedCardIndexes[0];
+    const indexB = this.selectedCardIndexes[1];
+
+    const cardA: Card = this.cards[indexA];
+    const cardB: Card = this.cards[indexB];
+
+    for (const cardPair of this.deck!.cardsPairs) {
+      if (
+        (cardPair.card1 === cardA && cardPair.card2 === cardB) ||
+        (cardPair.card1 === cardB && cardPair.card2 === cardA)
+      ) {
+        return true;
+      }
+    }
 
     return false;
   }
