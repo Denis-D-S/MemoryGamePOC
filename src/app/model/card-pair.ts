@@ -12,8 +12,11 @@ export class CardPair {
     this.card2 = card2;
   }
 
-  public isPair(a: Card, b: Card): boolean {
-    //verificacao
-    throw new Error('Not implemented');
+  public isPair(cardA: Card, cardB: Card): boolean {
+    if ((cardA === this.card1 && cardB === this.card2) ||
+      (cardA === this.card2 && cardB === this.card1)) {
+      return true;
+    }
+    return false;
   }
 }

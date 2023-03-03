@@ -5,7 +5,6 @@ import { CardPairService } from '../service/cardPair-service/card-pair.service';
 import { Deck } from '../model/deck';
 import { CardService } from '../service/card-service/card.service';
 import { Card } from '../model/card';
-import { CardPair } from '../model/card-pair';
 
 @Component({
   selector: 'app-game-page',
@@ -13,23 +12,23 @@ import { CardPair } from '../model/card-pair';
   styleUrls: ['./game-page.component.scss'],
 })
 export class GamePageComponent implements OnInit {
+  // cardPairs: string | undefined;
   deckId: string | null | undefined;
-  cardPairs: string | undefined;
   deck: Deck | undefined;
   cards: Card[] = []; /** length: 6 */
-  cardIsFlipped: boolean[] = []; /** length: 6 */
+  cardsAreFlipped: boolean[] = []; /** length: 6 */
   score: number;
 
-  get selectedCardIndexes(): number[] {
-    const arr = this.cardIsFlipped
+  get selectedCardIndexes(): number[] { // método que pega o índice apenas das cartas que foram selecionadas
+    const array = this.cardsAreFlipped
       .map((_, index) => index)
-      .filter((valor) => this.cardIsFlipped[valor]);
-    console.log('selectedCardIndexes', arr);
-    return arr;
+      .filter((valor) => this.cardsAreFlipped[valor]);
+    console.log('selectedCardIndexes', array);
+    return array;
   }
 
   get flipedCardsCount(): number {
-    return this.cardIsFlipped.filter((c) => c).length;
+    return this.cardsAreFlipped.filter((c) => c).length;
   }
 
   constructor(
@@ -44,20 +43,14 @@ export class GamePageComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.deckId = params.get('deckId'); //aqui vai retornar "1" pois é o valor que escrevij na URL...
-
-      this.cardPairs = JSON.stringify(
-        this.cardPairService.getCardPairById(this.deckId!),
-        null,
-        4
-      ); //aqui peguei o Objeto CardPairs e transformei eles em String JSON para poder imprimir no HTML.
-
+      // this.cardPairs = JSON.stringify(this.cardPairService.getCardPairById(this.deckId!), null, 4); //aqui peguei o Objeto CardPairs e transformei eles em String JSON para poder imprimir no HTML.
       this.deck = this.deckService.getDeckById(this.deckId!); // acessamos o deck de id '1' normalmente, como sempre...
       if (this.deck !== null) {
         this.cards = this.deck!.getCards(); //criamos um método especial que permite pegar as cartas presentes em cada deck...
         //agora a variável "cards" está povoada com todos os cards... basta fazer um "*ngFor" no HTML para imprimir todos os cards...
         console.log(this.cards);
 
-        this.cardIsFlipped = this.cards.map(() => false); //os cards começam como "false", ou seja "não estão flipped".
+        this.cardsAreFlipped = this.cards.map(() => false); //os cards começam como "false", ou seja "não estão flipped".
       }
     });
   }
@@ -81,7 +74,7 @@ export class GamePageComponent implements OnInit {
   }
 
   flipCard(index: number): void {
-    this.cardIsFlipped[index] = !this.cardIsFlipped[index]; //isso faz a carta virar, false para true..
+    this.cardsAreFlipped[index] = !this.cardsAreFlipped[index]; //isso faz a carta virar, false para true..
   }
 
   canFlip(): boolean {
@@ -90,7 +83,6 @@ export class GamePageComponent implements OnInit {
   }
 
   isMatch(): boolean {
-    //TODO: TERMINAR ESTE MÉTODO E CONTINUAR DAQUI... SABER SE DEU MATCH PARA ENTÃO PONTUAR.
     console.log('chamou isMatch');
     const indexA = this.selectedCardIndexes[0];
     const indexB = this.selectedCardIndexes[1];

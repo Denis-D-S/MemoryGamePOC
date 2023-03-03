@@ -6,36 +6,31 @@ export class Deck {
   id: string;
   name: string;
   cardsPairs: CardPair[];
+  cards: Card[];
 
   constructor(id: string, name: string, cardsPairs: CardPair[]) {
     this.id = id;
     this.name = name;
     this.cardsPairs = cardsPairs;
+    this.cards = this.getCards(); //TODO: verificar se este é o melhor aproach. Tive que criar este ccara para o método isPair() funcionar.
   }
 
   //MÉTODO PARA RETORNAR TODAS AS CARTAS DE UM DECK:
   getCards(): Card[] {
-    //criar lista de cards
-    const cards: Card[] = [];
-    //iterar pela lista de pares de cards
+    this.cards = []; // É preciso inicializar este cara aqui. Para não ter a lista duplicada. Este cara limpa a lista antes de adicionas as cartas
     this.cardsPairs.forEach((pair) => {
-      //para cada par, colocar suas cartas na lista de cartas.
-      cards.push(pair.card1);
-      cards.push(pair.card2);
+      this.cards.push(pair.card1);
+      this.cards.push(pair.card2);
     });
-    // dá pra fazer o código acima também usando um loop "for" clássico ao invés de "map"...
-    // for (let i = 0; i < this.cardsPairs.length; i++){
-    //   const pair = this.cardsPairs[i];
-    //   //para cada par, colocar suas cartas na lista de cartas.
-    //   cards.push(pair.card1);
-    //   cards.push(pair.card2);
-    // }
-    //retornar a lista de cartas.
-    return cards;
+    return this.cards;
   }
 
-  isPair(a: Card, b: Card): boolean {
-    // chamar o isPair para todos os cards pairs
-    throw new Error('Not Implemented');
+
+  public isPair(cardA: Card, cardB: Card): boolean {
+    if ((cardA === this.cards[0] && cardB === this.cards[1]) ||
+      (cardA === this.cards[1] && cardB === this.cards[0])) {
+      return true;
+    }
+    return false;
   }
 }
