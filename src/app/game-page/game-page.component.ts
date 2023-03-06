@@ -16,6 +16,7 @@ export class GamePageComponent implements OnInit {
   cards: Card[] = []; /** length: 6 */
   cardsAreFlipped: boolean[] = []; /** length: 6 */
   score: number;
+  cardsAreLocked: boolean = false;
   private lastTwoCardsFlipped: boolean[] = []; //TODO: SEGUNDA TENTATIVA, VERIFICAR...
   unflipCardsExecuted: boolean = false;
 
@@ -34,7 +35,6 @@ export class GamePageComponent implements OnInit {
     private deckService: DeckService,
   ) {
     this.score = 0;
-    // this.unflipCardsExecuted = false;
   }
 
   ngOnInit(): void {
@@ -53,7 +53,7 @@ export class GamePageComponent implements OnInit {
   /** Método PRINCIPAL chamado sempre que um card é clicado */
   onCardClicked(index: number): void {
     console.log('chamou onCardClicked');
-    if (this.canFlip()) {
+    if (this.canFlip() && !this.cardsAreLocked) {
       this.flipCard(index);
 
       if (this.flipedCardsCount === 2) {
@@ -62,8 +62,10 @@ export class GamePageComponent implements OnInit {
 
         if (isMatch) {
           this.addScore();
+          this.cardsAreLocked = true;
         } else {
-          this.unflipCards();
+            this.unflipCards();
+            this.cardsAreLocked = false;
         }
       }
     } else {
@@ -81,7 +83,8 @@ export class GamePageComponent implements OnInit {
   /** Método auxiliar que checa 2 cartas já estão viradas (usado no onCardClicked()) */
   canFlip(): boolean {
     console.log('chamou canFlip')
-    const canFlip: boolean = this.flipedCardsCount < 2; //se não houverem mais de 2 cartas viradas, então... true...
+    const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length; //conta quantas cartas estão viradas
+    const canFlip: boolean = flippedCardsCount < 2 || this.isMatch(); //se não houverem mais de 2 cartas viradas, OUUU se houverem 2 cartas viradas e forem um Match... ENTÃO pode virar a próxima carta...
     return canFlip; //retorna true
   }
 
