@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DeckService } from '../service/deck-service/deck.service';
-import { Deck } from '../model/deck';
-import { Card } from '../model/card';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {DeckService} from '../service/deck-service/deck.service';
+import {Deck} from '../model/deck';
+import {Card} from '../model/card';
 
 @Component({
   selector: 'app-game-page',
@@ -82,11 +82,16 @@ export class GamePageComponent implements OnInit {
 
   /** Método auxiliar que checa 2 cartas já estão viradas (usado no onCardClicked()) */
   canFlip(): boolean {
-    console.log('chamou canFlip')
-    const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length; //conta quantas cartas estão viradas
-    const canFlip: boolean = flippedCardsCount < 2 || this.isMatch(); //se não houverem mais de 2 cartas viradas, OUUU se houverem 2 cartas viradas e forem um Match... ENTÃO pode virar a próxima carta...
-    return canFlip; //retorna true
+    console.log('chamou canFlip');
+    const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length; // conta quantas cartas estão viradas
+    if (flippedCardsCount === 2) {
+       // chama o método isMatch() para verificar se as 2 cartas viradas são um Match
+      return this.isMatch(); // retorna true se as 2 cartas viradas são um Match, senão false
+    }
+     // se o número de cartas viradas for menor que 2, então pode virar a carta
+    return flippedCardsCount < 2; // retorna true se pode virar a carta, senão false
   }
+
 
   /** Método auxiliar que verifica se as 2 cartas viradas são um Match (usado no onCardClicked()) */
   isMatch(): boolean {
