@@ -55,8 +55,11 @@ const cardPairs: CardPair[] = [
 //stubs dos decks...
 const decks: Deck[] = [
   new Deck(
-    '1', 'deck', cardPairs  //e este objeto decks aqui contém todos os cardPairs que criamos...
-  )
+    '1', 'deck1', cardPairs  //e este objeto decks aqui contém todos os cardPairs que criamos...
+  ),
+  new Deck(
+    '2', 'deck2', cardPairs
+  ),
 ];
 
 
