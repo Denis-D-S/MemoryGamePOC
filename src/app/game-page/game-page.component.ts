@@ -13,14 +13,17 @@ export class GamePageComponent implements OnInit {
   // cardPairs: string | undefined;
   deckId: string | null | undefined;
   deck: Deck | undefined;
-  cards: Card[] = []; /** length: 6 */
-  cardsAreFlipped: boolean[] = []; /** length: 6 */
+  cards: Card[] = [];
+  /** length: 6 */
+  cardsAreFlipped: boolean[] = [];
+  /** length: 6 */
   score: number;
   cardsAreLocked: boolean = false;
   private lastTwoCardsFlipped: boolean[] = []; //TODO: SEGUNDA TENTATIVA, VERIFICAR...
   unflipCardsExecuted: boolean = false;
 
   blockedCardIndexes: number[];
+  showMessage?: string;
 
   get selectedCardIndexes(): number[] {
     return this.cardsAreFlipped
@@ -37,6 +40,7 @@ export class GamePageComponent implements OnInit {
     private deckService: DeckService,
   ) {
     this.score = 0;
+    this.blockedCardIndexes = [];
   }
 
   ngOnInit(): void {
@@ -54,25 +58,26 @@ export class GamePageComponent implements OnInit {
 
   /** Método PRINCIPAL chamado sempre que um card é clicado */
   onCardClicked(index: number): void {
-    if (!blockedCardIndexes.includes(index)) {
+    if (!this.blockedCardIndexes.includes(index)) {
       console.log('chamou onCardClicked');
-      if (this.canFlip() && !this.cardsAreLocked) {
+      if (this.canFlip()) {
         this.flipCard(index);
-        
+
         if (this.flipedCardsCount === 2) {
           const isMatch = this.isMatch();
           console.log('Deu Match: ', isMatch);
-          
+
           if (isMatch) {
             this.addScore();
             const indexA = this.selectedCardIndexes[0];
             const indexB = this.selectedCardIndexes[1];
             this.blockedCardIndexes.push(indexA, indexB);
-            this.cardsAreLocked = true;
-          } else {
-            this.unflipCards();
-            this.cardsAreLocked = false;
+            this.showMessageBy2Seconds('Parabéns!');
           }
+          else {
+            this.showMessageBy2Seconds('Não deu Match. Desvirando as cartas em 1 momento...');
+          }
+          this.unflipCards();
         }
       } else {
         console.log('Deve desvirar as cartas');
@@ -92,7 +97,7 @@ export class GamePageComponent implements OnInit {
     console.log('chamou canFlip');
     const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length; // conta quantas cartas estão viradas
 
-     // se o número de cartas viradas for menor que 2, então pode virar a carta
+    // se o número de cartas viradas for menor que 2, então pode virar a carta
     return flippedCardsCount < 2; // retorna true se pode virar a carta, senão false
   }
 
@@ -120,7 +125,7 @@ export class GamePageComponent implements OnInit {
   /** Método auxiliar que marca ponto no score, caso tenha sido Match) */
   addScore(): void {
     console.log('chamou addScore')
-    if (this.isMatch()){
+    if (this.isMatch()) {
       this.score++;
     } else {
       console.log('Não deu Match. Você não recebeu ponto nesta rodada!');
@@ -132,28 +137,23 @@ export class GamePageComponent implements OnInit {
   //Pois se este método desvirar todas as cartas, ele estaria zerando o jogo inteiro... E isso é errado.
   unflipCards(): void {
     console.log('chamou unflipCards')
-    const lastTwoCardIndexes = this.selectedCardIndexes.slice(-2); // pega os índices das últimas duas cartas viradas
-    console.log('cards index: ' + lastTwoCardIndexes);
-    if (!this.isMatch()){
-      console.log('checa se deu match, se isMatch: ' + !this.isMatch())
+    console.log('cards index para desvirar: ' + this.selectedCardIndexes);
 
-      this.unflipCardsExecuted = true; // esta marcação indica que o método foi executado...
+    this.unflipCardsExecuted = true; // esta marcação indica que o método foi executado...
 
-      setTimeout(() => {
-        lastTwoCardIndexes.forEach(index => this.flipCard(index)); // desvira as cartas depois de 3 segundos
+    setTimeout(() => {
+      this.selectedCardIndexes.forEach(index => this.flipCard(index)); // desvira as cartas depois de 3 segundos
 
-        this.unflipCardsExecuted = false; // depois que as cartas forem desviradas, precisamos indicar que o método deixou de ser executado...
-      }, 2000);
-    } else {
-      console.log('Não deu Match! Portanto estou desvirando as cartas de volta para você!');
-    }
+      this.unflipCardsExecuted = false; // depois que as cartas forem desviradas, precisamos indicar que o método deixou de ser executado...
+    }, 2000);
   }
 
-
-
-
-
-
+  showMessageBy2Seconds(message: string): void {
+    this.showMessage = message;
+    setTimeout(() => {
+      this.showMessage = undefined;
+    }, 2000)
+  }
 
 
 }

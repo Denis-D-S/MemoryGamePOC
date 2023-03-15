@@ -25,3 +25,12 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+TODOS:
+1. erro ao poder virar e desvirar as cartas infinitamente. Dessa forma o usuário poderia visualizar o jogo inteiro antes de tentar qualquer carta
+2. o usuário consegue ainda clicar nas cartas enquanto os 2 segundos da mensagem estão rodando. Ele não deveria conseguir interagir com o jogo enquanto o jogo está processando
+3. contador de tentativas
+4. falta um parabéns de fim de jogo
+5. criar 3 níveis de dificuldade
+6. consequentemente criar decks maiores para cada nível (JSON stub)
+7. 
