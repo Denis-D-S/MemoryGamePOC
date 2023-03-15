@@ -7,7 +7,7 @@
       <div
         class="card-content"
         (click)="onCardClicked(i)"
-        [ngClass]="{ front: cardsAreFlipped[i], back: !cardsAreFlipped[i] }"
+        [ngClass]="{ front: cardsAreFlipped[i], back: !cardsAreFlipped[i], selected: blockedCardIndexes.includes(i) }"
       >
         {{ card.name }}
       </div>

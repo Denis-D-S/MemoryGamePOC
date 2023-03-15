@@ -20,6 +20,8 @@ export class GamePageComponent implements OnInit {
   private lastTwoCardsFlipped: boolean[] = []; //TODO: SEGUNDA TENTATIVA, VERIFICAR...
   unflipCardsExecuted: boolean = false;
 
+  blockedCardIndexes: number[];
+
   get selectedCardIndexes(): number[] {
     return this.cardsAreFlipped
       .map((_, index) => index)
@@ -52,25 +54,30 @@ export class GamePageComponent implements OnInit {
 
   /** Método PRINCIPAL chamado sempre que um card é clicado */
   onCardClicked(index: number): void {
-    console.log('chamou onCardClicked');
-    if (this.canFlip() && !this.cardsAreLocked) {
-      this.flipCard(index);
-
-      if (this.flipedCardsCount === 2) {
-        const isMatch = this.isMatch();
-        console.log('Deu Match: ', isMatch);
-
-        if (isMatch) {
-          this.addScore();
-          this.cardsAreLocked = true;
-        } else {
+    if (!blockedCardIndexes.includes(index)) {
+      console.log('chamou onCardClicked');
+      if (this.canFlip() && !this.cardsAreLocked) {
+        this.flipCard(index);
+        
+        if (this.flipedCardsCount === 2) {
+          const isMatch = this.isMatch();
+          console.log('Deu Match: ', isMatch);
+          
+          if (isMatch) {
+            this.addScore();
+            const indexA = this.selectedCardIndexes[0];
+            const indexB = this.selectedCardIndexes[1];
+            this.blockedCardIndexes.push(indexA, indexB);
+            this.cardsAreLocked = true;
+          } else {
             this.unflipCards();
             this.cardsAreLocked = false;
+          }
         }
+      } else {
+        console.log('Deve desvirar as cartas');
+        this.unflipCards();
       }
-    } else {
-      console.log('Deve desvirar as cartas');
-      this.unflipCards();
     }
   }
 
@@ -84,10 +91,7 @@ export class GamePageComponent implements OnInit {
   canFlip(): boolean {
     console.log('chamou canFlip');
     const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length; // conta quantas cartas estão viradas
-    if (flippedCardsCount === 2) {
-       // chama o método isMatch() para verificar se as 2 cartas viradas são um Match
-      return this.isMatch(); // retorna true se as 2 cartas viradas são um Match, senão false
-    }
+
      // se o número de cartas viradas for menor que 2, então pode virar a carta
     return flippedCardsCount < 2; // retorna true se pode virar a carta, senão false
   }
