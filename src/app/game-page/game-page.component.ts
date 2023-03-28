@@ -24,6 +24,7 @@ export class GamePageComponent implements OnInit {
 
   blockedCardIndexes: number[];
   showMessage?: string;
+  lastSelectedCardIndex: number | null = null;
 
   get selectedCardIndexes(): number[] {
     return this.cardsAreFlipped
@@ -58,9 +59,9 @@ export class GamePageComponent implements OnInit {
 
   /** Método PRINCIPAL chamado sempre que um card é clicado */
   onCardClicked(index: number): void {
+    console.log('chamou onCardClicked');
     if (!this.blockedCardIndexes.includes(index)) {
-      console.log('chamou onCardClicked');
-      if (this.canFlip()) {
+      if (this.canFlip(index)) {
         this.flipCard(index);
 
         if (this.flipedCardsCount === 2) {
@@ -80,9 +81,13 @@ export class GamePageComponent implements OnInit {
           this.unflipCards();
         }
       } else {
-        console.log('Deve desvirar as cartas');
+        console.log('NENHUMA CARTA PODE SER DESVIRADA POIS O "canFlip" retornoou false...');
+      } else{
+        console.log('Como o canFLip retornou false, as cartas devem ser desviradas...');
         this.unflipCards();
       }
+
+      this.lastSelectedCardIndex = index;
     }
   }
 
@@ -93,13 +98,55 @@ export class GamePageComponent implements OnInit {
   }
 
   /** Método auxiliar que checa 2 cartas já estão viradas (usado no onCardClicked()) */
-  canFlip(): boolean {
-    console.log('chamou canFlip');
-    const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length; // conta quantas cartas estão viradas
+  // canFlip(index: number): boolean {
+  //   console.log('chamou canFlip');
+  //
+  //   const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length;
+  //   const lastSelectedCardIndex = this.selectedCardIndexes[this.selectedCardIndexes.length - 1];
+  //
+  //   if (lastSelectedCardIndex === index) {
+  //     console.log('Não pode virar a carta atual, pois é a mesma carta que a última clicada.');
+  //     return false;
+  //   }
+  //
+  //   if (this.selectedCardIndexes.includes(index)) {
+  //     console.log('Não pode virar a carta atual, pois ela já está virada.');
+  //     return false;
+  //   }
+  //
+  //   return flippedCardsCount <= 1;
+  // }
 
-    // se o número de cartas viradas for menor que 2, então pode virar a carta
-    return flippedCardsCount < 2; // retorna true se pode virar a carta, senão false
+
+  cantFlipBecauseItsTheSameCard(index:number){ //este método deve rodar quando o usuário clicar 2 vezes na mesma carta...
+    console.log('chamou cantFlipBecauseItsTheSameCard')
+
+    //@TODO: IMPLEMENTAR ESTE MÉTODO  E COLOCAR ELE NO MÉTODO "onCardClicked()"
+    const lastSelectedCardIndex = this.selectedCardIndexes[this.selectedCardIndexes.length - 1];
+    if (lastSelectedCardIndex === index) {
+      console.log('Não pode virar a carta atual, pois é a mesma carta que a última clicada.');
+      return true;
+    } else {
+      return false;
+    }
   }
+
+  canFlipBecauseTwoCardsHaveBeenClicked(index:number){ //este método deve rodar quando o usuário clicar em 2 cartas, e acabar não dando match...
+    //@TODO: IMPLEMENTAR ESTE MÉTODO  E COLOCAR ELE NO MÉTODO "onCardClicked()"
+    console.log('chamou canFlipBecauseTwoCardsHaveBeenClicked');
+
+    const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length;
+
+    if (this.selectedCardIndexes.includes(index)) {
+      console.log('Não pode virar a carta atual, pois ela já está virada.');
+      return false;
+    }
+    return flippedCardsCount <= 1; // se retornar true, pode virar a próxima carta, se retornar false, não pode virar a próxima carta...
+  }
+
+
+
+
 
 
   /** Método auxiliar que verifica se as 2 cartas viradas são um Match (usado no onCardClicked()) */
@@ -156,4 +203,9 @@ export class GamePageComponent implements OnInit {
   }
 
 
+  restartGame() {
+    this.cardsAreFlipped = this.cards.map(() => false); //faz todos os cards ficarem false, ou seja, zera o jogo...
+    this.score = 0; //zera o score
+    this.blockedCardIndexes = []; //zera o array de cartas bloqueadas, ou seja, agora todas as cartas são permitidas clicar...
+  }
 }
