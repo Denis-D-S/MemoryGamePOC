@@ -44,32 +44,55 @@ export class GamePageComponent implements OnInit {
     this.blockedCardIndexes = [];
   }
 
+  // ngOnInit(): void {
+  //
+  //   this.shuffleCards(); //começamos embaralhando as cartas...
+  //
+  //   this.route.paramMap.subscribe((params) => {
+  //     this.deckId = params.get('deckId'); //aqui vai retornar "1" pois é o valor que escrevi na URL...
+  //     this.deck = this.deckService.getDeckById(this.deckId!); // acessamos o deck de id '1'...
+  //     if (this.deck !== null) { //checamos se o deck está vindo "null"
+  //       this.cards = this.deck!.getCards(); //criamos um método especial dentro do Deck que permite pegar as cartas presentes dentro de cada deck...
+  //       this.cardsAreFlipped = this.cards.map(() => false); //por fim, temos que garantir que todas as cards que acabamos de pegar começam como "false", pois todas precisam estarem viradas para baixo
+  //     } else {
+  //       console.log('Deck não encontrado. Algo deu errado. Deck retornou "null".');
+  //     }
+  //   });
+  // }
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.deckId = params.get('deckId'); //aqui vai retornar "1" pois é o valor que escrevi na URL...
-      this.deck = this.deckService.getDeckById(this.deckId!); // acessamos o deck de id '1'...
-      if (this.deck !== null) { //checamos se o deck está vindo "null"
-        this.cards = this.deck!.getCards(); //criamos um método especial dentro do Deck que permite pegar as cartas presentes dentro de cada deck...
-        this.cardsAreFlipped = this.cards.map(() => false); //por fim, temos que garantir que todas as cards que acabamos de pegar começam como "false", pois todas precisam estarem viradas para baixo
+      this.deckId = params.get('deckId');
+      this.deck = this.deckService.getDeckById(this.deckId!);
+      if (this.deck !== null) {
+        this.cards = this.deck!.getCards();
+        this.cardsAreFlipped = this.cards.map(() => false);
+        this.shuffleCards(); // Embaralha as cartas
       } else {
         console.log('Deck não encontrado. Algo deu errado. Deck retornou "null".');
       }
     });
   }
 
+
   /** Método PRINCIPAL chamado sempre que um card é clicado */
   onCardClicked(index: number): void {
     console.log('chamou onCardClicked');
-    if (!this.blockedCardIndexes.includes(index)) { //se a carta bloqueada não for a mesma clicada pelo usuário... então pode virar a carta...
-      if (this.lastSelectedCardIndex !== index) { //se a carta clicada não for a mesma igual a última clicada... então pode virar a carta...
-        this.flipCard(index);
+    if (this.unflipCardsExecuted) { //esta condição é executada, para que o usuário não possa clicar em uma carta enquanto o setTimeOut() de 2 segundos estiver rodando...
+      return; //estes "return" são usados para que o código não continue rodando (ocorra um break), caso alguma condição seja atendida...
+    }
+    if (!this.blockedCardIndexes.includes(index)) { //se a carta bloqueada não for a mesma clicada pelo usuário...
+      if (this.cantFlipBecauseItsTheSameCard(index)) { // verifica a carta clicada é a mesma anteriormente clicada... caso o usuário clique 2 vezes na mesma carta, não pode virar...
+        return;
+      }
+      if (this.lastSelectedCardIndex !== index) { //se a última carta clicada for de um índice diferente (for uma carta diferente), então ok para ser virada...
+        this.flipCard(index); //daí flipa a carta...
 
-        if (this.flipedCardsCount === 2) { //se duas cartas já tiverem sido viradas... então cheque se deu match
-          const isMatch = this.isMatch();
+        if (this.flipedCardsCount === 2) { //se a quantidade de cartas viradas for igual a 2, então cheque se deu match...
+          const isMatch = this.isMatch(); //checando se deu match...
           console.log('Deu Match: ', isMatch);
 
-          if (isMatch) { // se deu match, pontua e corta fora do jogo as cartas...
-            this.addScore();
+          if (isMatch) { //se deu match...
+            this.addScore(); // então pontua...
             const indexA = this.selectedCardIndexes[0];
             const indexB = this.selectedCardIndexes[1];
             this.blockedCardIndexes.push(indexA, indexB);
@@ -78,18 +101,17 @@ export class GamePageComponent implements OnInit {
           else {
             this.showMessageBy2Seconds('Não deu Match. Desvirando as cartas em 1 momento...');
           }
-          this.unflipCards(); //caso não tenha dado match, desvire as 2 cartas...
+          this.unflipCards() //caso não tenha dado match, desvire as 2 cartas...
         }
-      } else {
-        console.log('NENHUMA CARTA PODE SER DESVIRADA POIS O "canFlip" retornoou false...');
-        // this.canFlipBecauseTwoCardsHaveBeenClicked(index);
-        if (this.canFlipBecauseTwoCardsHaveBeenClicked(index)) {
-          this.unflipCards();
+      } else { //caso o usuário tenha clicado em 2 cartas, mas não tenha dado match, então...
+        if (this.canFlipBecauseTwoCardsHaveBeenClicked(index)) { //então desvire as 2 últimas cartas clicadas que não deram match...
+          this.unflipCards(); //desvire as cartas...
         }
       }
       this.lastSelectedCardIndex = index;
     }
   }
+
 
   /** Método auxiliar para virar a carta (usado no onCardClicked()) */
   flipCard(index: number): void {
@@ -97,26 +119,6 @@ export class GamePageComponent implements OnInit {
     this.cardsAreFlipped[index] = !this.cardsAreFlipped[index]; //isso faz a carta virar, false para true..
   }
 
-  /** Método auxiliar que checa 2 cartas já estão viradas (usado no onCardClicked()) */
-  //@TODO: tive que aposentar este método pois foi preciso dividi-lo em 2 métodos diferentes...
-  // canFlip(index: number): boolean {
-  //   console.log('chamou canFlip');
-  //
-  //   const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length;
-  //   const lastSelectedCardIndex = this.selectedCardIndexes[this.selectedCardIndexes.length - 1];
-  //
-  //   if (lastSelectedCardIndex === index) {
-  //     console.log('Não pode virar a carta atual, pois é a mesma carta que a última clicada.');
-  //     return false;
-  //   }
-  //
-  //   if (this.selectedCardIndexes.includes(index)) {
-  //     console.log('Não pode virar a carta atual, pois ela já está virada.');
-  //     return false;
-  //   }
-  //
-  //   return flippedCardsCount <= 1;
-  // }
 
 
   cantFlipBecauseItsTheSameCard(index:number){ //este método deve rodar quando o usuário clicar 2 vezes na mesma carta...
@@ -210,5 +212,12 @@ export class GamePageComponent implements OnInit {
     this.cardsAreFlipped = this.cards.map(() => false); //faz todos os cards ficarem false, ou seja, zera o jogo...
     this.score = 0; //zera o score
     this.blockedCardIndexes = []; //zera o array de cartas bloqueadas, ou seja, agora todas as cartas são permitidas clicar...
+  }
+
+  shuffleCards() {
+    for (let i = this.cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+    }
   }
 }

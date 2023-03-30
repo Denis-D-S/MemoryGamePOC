@@ -1,19 +1,23 @@
 <h2>Score: {{ score }}</h2>
-
-<div class="cards-container">
-  <div *ngFor="let card of cards; index as i">
-    <!--  CARD -->
-    <div class="card">
-      <div
-        class="card-content"
-        (click)="onCardClicked(i)"
-        [ngClass]="{ front: cardsAreFlipped[i], back: !cardsAreFlipped[i], selected: blockedCardIndexes.includes(i) }"
-      >
-        {{ card.name }}
+<div class="container">
+  <div class="cards-container">
+    <div *ngFor="let card of cards; index as i">
+      <!--  CARD -->
+      <div class="card">
+        <div
+          class="card-content"
+          (click)="onCardClicked(i)"
+          [ngClass]="{ front: cardsAreFlipped[i], back: !cardsAreFlipped[i], selected: blockedCardIndexes.includes(i) }"
+          [style.background-image]="'url(' + card.image + ')'"
+        >
+          {{ card.name }}
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+
 
 <div>
   <h2>
