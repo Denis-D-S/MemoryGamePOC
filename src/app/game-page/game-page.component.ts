@@ -60,15 +60,15 @@ export class GamePageComponent implements OnInit {
   /** Método PRINCIPAL chamado sempre que um card é clicado */
   onCardClicked(index: number): void {
     console.log('chamou onCardClicked');
-    if (!this.blockedCardIndexes.includes(index)) {
-      if (this.canFlip(index)) {
+    if (!this.blockedCardIndexes.includes(index)) { //se a carta bloqueada não for a mesma clicada pelo usuário... então pode virar a carta...
+      if (this.lastSelectedCardIndex !== index) { //se a carta clicada não for a mesma igual a última clicada... então pode virar a carta...
         this.flipCard(index);
 
-        if (this.flipedCardsCount === 2) {
+        if (this.flipedCardsCount === 2) { //se duas cartas já tiverem sido viradas... então cheque se deu match
           const isMatch = this.isMatch();
           console.log('Deu Match: ', isMatch);
 
-          if (isMatch) {
+          if (isMatch) { // se deu match, pontua e corta fora do jogo as cartas...
             this.addScore();
             const indexA = this.selectedCardIndexes[0];
             const indexB = this.selectedCardIndexes[1];
@@ -78,15 +78,15 @@ export class GamePageComponent implements OnInit {
           else {
             this.showMessageBy2Seconds('Não deu Match. Desvirando as cartas em 1 momento...');
           }
-          this.unflipCards();
+          this.unflipCards(); //caso não tenha dado match, desvire as 2 cartas...
         }
       } else {
         console.log('NENHUMA CARTA PODE SER DESVIRADA POIS O "canFlip" retornoou false...');
-      } else{
-        console.log('Como o canFLip retornou false, as cartas devem ser desviradas...');
-        this.unflipCards();
+        // this.canFlipBecauseTwoCardsHaveBeenClicked(index);
+        if (this.canFlipBecauseTwoCardsHaveBeenClicked(index)) {
+          this.unflipCards();
+        }
       }
-
       this.lastSelectedCardIndex = index;
     }
   }
@@ -98,6 +98,7 @@ export class GamePageComponent implements OnInit {
   }
 
   /** Método auxiliar que checa 2 cartas já estão viradas (usado no onCardClicked()) */
+  //@TODO: tive que aposentar este método pois foi preciso dividi-lo em 2 métodos diferentes...
   // canFlip(index: number): boolean {
   //   console.log('chamou canFlip');
   //
@@ -122,7 +123,7 @@ export class GamePageComponent implements OnInit {
     console.log('chamou cantFlipBecauseItsTheSameCard')
 
     //@TODO: IMPLEMENTAR ESTE MÉTODO  E COLOCAR ELE NO MÉTODO "onCardClicked()"
-    const lastSelectedCardIndex = this.selectedCardIndexes[this.selectedCardIndexes.length - 1];
+    const lastSelectedCardIndex = this.selectedCardIndexes?.[this.selectedCardIndexes?.length - 1];
     if (lastSelectedCardIndex === index) {
       console.log('Não pode virar a carta atual, pois é a mesma carta que a última clicada.');
       return true;
@@ -130,6 +131,8 @@ export class GamePageComponent implements OnInit {
       return false;
     }
   }
+
+
 
   canFlipBecauseTwoCardsHaveBeenClicked(index:number){ //este método deve rodar quando o usuário clicar em 2 cartas, e acabar não dando match...
     //@TODO: IMPLEMENTAR ESTE MÉTODO  E COLOCAR ELE NO MÉTODO "onCardClicked()"
