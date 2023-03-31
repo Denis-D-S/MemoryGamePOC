@@ -1,10 +1,34 @@
-.card {
-  height: 150px;
-  width: 150px;
-  padding: 8px;
-  font-size: 14px;
+//CSS do container que engloba o jogo inteiro
+.container{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  margin: 0 auto;
 }
 
+//CSS do container que engloba todas as cartas
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border: black solid 1px;
+}
+
+//CSS específico do card
+.card {
+  height: 175px;
+  width: 175px;
+  padding: 8px;
+  font-size: 14px;
+  border: black solid 1px;
+  margin: 2px;
+}
+
+//CSS das imagens internas do card, o conteúdo do card
 .card-content {
   width: 100%;
   height: 100%;
@@ -13,25 +37,25 @@
 }
 
 
-.cards-container {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
+//CSS da carta virada para cima (não é usado mais)
+//.front {
+//  background-color: lightblue;
+//}
 
-.front {
-  background-color: lightblue;
-}
-
+//CSS da carta virada para baixo
 .back {
   background-color: lightsalmon;
 }
 
+//CSS da carta depois que ela é pontuada e "é retirada do jogo"
 .selected {
   background-color: gray;
+  border: 4px solid #800080; /* Borda roxa de 4 pixels */
+  box-shadow: 0 0 20px #800080; /* Sombra roxa com desfoque de 20 pixels */
 }
 
-//BOTÃO DE RESTART ABAIXO:
+
+//CCS do botão de restart abaixo
 .btn-restart {
   background-color: #007bff;
   border: 2px solid #007bff;
@@ -42,16 +66,32 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 .btn-restart:hover {
   background-color: #fff;
   color: #007bff;
 }
 
-.cards-container {
+
+
+//POPUP DA IMAGEM DE "ERRRROOUUU"
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
+
+.popup img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+
 

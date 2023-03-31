@@ -10,7 +10,6 @@ import {Card} from '../model/card';
   styleUrls: ['./game-page.component.scss'],
 })
 export class GamePageComponent implements OnInit {
-  // cardPairs: string | undefined;
   deckId: string | null | undefined;
   deck: Deck | undefined;
   cards: Card[] = [];
@@ -18,13 +17,28 @@ export class GamePageComponent implements OnInit {
   cardsAreFlipped: boolean[] = [];
   /** length: 6 */
   score: number;
-  cardsAreLocked: boolean = false;
-  private lastTwoCardsFlipped: boolean[] = []; //TODO: SEGUNDA TENTATIVA, VERIFICAR...
+  misses: number;
+  showPopup: boolean = false;
   unflipCardsExecuted: boolean = false;
 
   blockedCardIndexes: number[];
   showMessage?: string;
   lastSelectedCardIndex: number | null = null;
+
+  //////////////////////////////////////////////////////////////////////////
+  showMissesPopup: boolean = false;
+  missesListener(): boolean {
+    return this.showMissesPopup;
+  }
+  triggerMissesPopup() {
+    this.showMissesPopup = true;
+    setTimeout(() => {
+      this.showMissesPopup = false;
+    }, 1000);
+  }
+
+  //////////////////////////////////////////////////////////////////////////
+
 
   get selectedCardIndexes(): number[] {
     return this.cardsAreFlipped
@@ -41,31 +55,17 @@ export class GamePageComponent implements OnInit {
     private deckService: DeckService,
   ) {
     this.score = 0;
+    this.misses = 0;
     this.blockedCardIndexes = [];
   }
 
-  // ngOnInit(): void {
-  //
-  //   this.shuffleCards(); //começamos embaralhando as cartas...
-  //
-  //   this.route.paramMap.subscribe((params) => {
-  //     this.deckId = params.get('deckId'); //aqui vai retornar "1" pois é o valor que escrevi na URL...
-  //     this.deck = this.deckService.getDeckById(this.deckId!); // acessamos o deck de id '1'...
-  //     if (this.deck !== null) { //checamos se o deck está vindo "null"
-  //       this.cards = this.deck!.getCards(); //criamos um método especial dentro do Deck que permite pegar as cartas presentes dentro de cada deck...
-  //       this.cardsAreFlipped = this.cards.map(() => false); //por fim, temos que garantir que todas as cards que acabamos de pegar começam como "false", pois todas precisam estarem viradas para baixo
-  //     } else {
-  //       console.log('Deck não encontrado. Algo deu errado. Deck retornou "null".');
-  //     }
-  //   });
-  // }
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.deckId = params.get('deckId');
       this.deck = this.deckService.getDeckById(this.deckId!);
       if (this.deck !== null) {
         this.cards = this.deck!.getCards();
-        this.cardsAreFlipped = this.cards.map(() => false);
+        this.cardsAreFlipped = this.cards.map(() => false); // Inicializa todas as cartas como não viradas...
         this.shuffleCards(); // Embaralha as cartas
       } else {
         console.log('Deck não encontrado. Algo deu errado. Deck retornou "null".');
@@ -100,6 +100,7 @@ export class GamePageComponent implements OnInit {
           }
           else {
             this.showMessageBy2Seconds('Não deu Match. Desvirando as cartas em 1 momento...');
+            this.addMisses();
           }
           this.unflipCards() //caso não tenha dado match, desvire as 2 cartas...
         }
@@ -184,6 +185,17 @@ export class GamePageComponent implements OnInit {
     }
   }
 
+  /** Método auxiliar que marca misses, caso não tenha dado Match) */
+  addMisses(): void {
+    console.log('chamou addMisses');
+    if (!this.isMatch()) {
+      this.misses++;
+      this.triggerMissesPopup();
+    } else {
+      console.log('Deu Match. Você não recebeu Misses nesta rodada!');
+    }
+  }
+
   /** Método auxiliar que desvira as cartas, caso não tenha sido Match) */
   //Este método precisa desvirar apenas as últimas 2 cartas que o usuário clicou, e não todas as cartas...
   //Pois se este método desvirar todas as cartas, ele estaria zerando o jogo inteiro... E isso é errado.
@@ -220,4 +232,16 @@ export class GamePageComponent implements OnInit {
       [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
     }
   }
+
+  //////////////////////////////////////////////////////////////////////////
+
+  // showPopUp() {
+  //   console.log('chamou showPopUp')
+  //   this.showPopup = true;
+  //   setTimeout(() => {
+  //     this.showPopup = false;
+  //   }, 2000);
+  // }
+
+
 }

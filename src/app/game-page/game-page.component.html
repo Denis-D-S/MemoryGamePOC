@@ -1,4 +1,22 @@
+
+<!--AQUI É O SCORE DO JOGO-->
 <h2>Score: {{ score }}</h2>
+<h2>Faustão gritando "ERRRROUUUUU": {{ misses }}</h2>
+
+<!--<div *ngIf="misses >0" class="popup" (click)="showPopUp()">-->
+<!--  <img src="assets/images/errou.png" alt="Imagem de Missed">-->
+<!--</div>-->
+
+<!--<div *ngIf="missesListener()" class="popup">-->
+<!--  <img src="assets/images/errou.png" alt="Imagem de Missed">-->
+<!--</div>-->
+
+<div *ngIf="missesListener()" class="popup">
+  <img src="assets/images/errou.png" alt="Imagem de Missed">
+</div>
+
+
+
 <div class="container">
   <div class="cards-container">
     <div *ngFor="let card of cards; index as i">
@@ -7,10 +25,17 @@
         <div
           class="card-content"
           (click)="onCardClicked(i)"
-          [ngClass]="{ front: cardsAreFlipped[i], back: !cardsAreFlipped[i], selected: blockedCardIndexes.includes(i) }"
-          [style.background-image]="'url(' + card.image + ')'"
-        >
-          {{ card.name }}
+          [ngClass]="{
+                      front: cardsAreFlipped[i],
+                      back: !cardsAreFlipped[i],
+                      selected: blockedCardIndexes.includes(i)
+                      }"
+          [style.background-image]="cardsAreFlipped[i] || blockedCardIndexes.includes(i) ? 'url(' + card.image + ')' : ''">
+
+          <div>
+              {{ card.name }} <!--AQUI SÃO OS NOMEZINHOS QUE APARECEM NO TOPO DE CADA CARTA, O NOME DE CADA CARTA -->
+          </div>
+
         </div>
       </div>
     </div>
@@ -19,28 +44,22 @@
 
 
 
+
 <div>
   <h2>
-    <span>{{showMessage}}</span>
+    <span>{{showMessage}}</span> <!--AQUI SÃO AS MENSAGENS DE "Parabéns" ou "Você errou, vamos desvirar as cartas", etc.-->
   </h2>
 </div>
 
 
-<div class="cards-container">
-  <span *ngFor="let cif of cardsAreFlipped">{{ cif }},</span>
-</div>
+<!--&lt;!&ndash;  AQUI É O BOOLEAN QUE MOSTRA O ESTADO DE CADA CARTA &ndash;&gt;-->
+<!--<div class="cards-container">-->
+<!--  <span *ngFor="let cif of cardsAreFlipped">{{ cif }},</span>-->
+<!--</div>-->
 
-<div class="cards-container">
-  <span *ngFor="let i of selectedCardIndexes">{{ i }},</span>
-</div>
 
+<!--BOTÃO DE RESTART -->
 <div class="pt-[25px]">
   <button class="btn-restart" (click)="restartGame()">ZERAR JOGO</button>
 </div>
-
-
-<!--<p>A variável deckId (sendo capturada da URL) é: {{ deckId }}</p>-->
-<!--<p>O 'deckName' (um dos atributos do Objeto 'Deck') é: {{ deck?.name }}</p>-->
-<!--<pre>O 'cardPairs' (um dos atributos do Objeto 'Deck') é: {{ this.cardPairs }}</pre>-->
-
 
