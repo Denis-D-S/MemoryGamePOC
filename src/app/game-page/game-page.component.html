@@ -1,40 +1,31 @@
 
-<!--AQUI É O SCORE DO JOGO-->
-<h2>Score: {{ score }}</h2>
-<h2>Faustão gritando "ERRRROUUUUU": {{ misses }}</h2>
+<!--AQUI É OS SCORES DO JOGO-->
+<div class="scores">
+  <h2>Score: {{ score }}</h2>
+  <h2>Faustão gritando "ERRRROUUUUU": {{ misses }}</h2>
+</div>
 
-<!--<div *ngIf="misses >0" class="popup" (click)="showPopUp()">-->
-<!--  <img src="assets/images/errou.png" alt="Imagem de Missed">-->
-<!--</div>-->
-
-<!--<div *ngIf="missesListener()" class="popup">-->
-<!--  <img src="assets/images/errou.png" alt="Imagem de Missed">-->
-<!--</div>-->
-
+<!--POP UP DE "ERROUUU" -->
 <div *ngIf="missesListener()" class="popup">
   <img src="assets/images/errou.png" alt="Imagem de Missed">
 </div>
 
-
-
+<!--CARDS DO JOGO -->
 <div class="container">
   <div class="cards-container">
     <div *ngFor="let card of cards; index as i">
       <!--  CARD -->
       <div class="card">
+
         <div
           class="card-content"
           (click)="onCardClicked(i)"
           [ngClass]="{
-                      front: cardsAreFlipped[i],
-                      back: !cardsAreFlipped[i],
-                      selected: blockedCardIndexes.includes(i)
-                      }"
+              front: cardsAreFlipped[i],
+              back: !cardsAreFlipped[i],
+              selected: blockedCardIndexes.includes(i)
+              }"
           [style.background-image]="cardsAreFlipped[i] || blockedCardIndexes.includes(i) ? 'url(' + card.image + ')' : ''">
-
-          <div>
-              {{ card.name }} <!--AQUI SÃO OS NOMEZINHOS QUE APARECEM NO TOPO DE CADA CARTA, O NOME DE CADA CARTA -->
-          </div>
 
         </div>
       </div>
@@ -42,10 +33,7 @@
   </div>
 </div>
 
-
-
-
-<div>
+<div class="scores">
   <h2>
     <span>{{showMessage}}</span> <!--AQUI SÃO AS MENSAGENS DE "Parabéns" ou "Você errou, vamos desvirar as cartas", etc.-->
   </h2>
@@ -59,7 +47,7 @@
 
 
 <!--BOTÃO DE RESTART -->
-<div class="pt-[25px]">
+<div class="pt-[25px] scores">
   <button class="btn-restart" (click)="restartGame()">ZERAR JOGO</button>
 </div>
 

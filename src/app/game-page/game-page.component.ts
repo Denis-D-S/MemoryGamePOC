@@ -13,9 +13,7 @@ export class GamePageComponent implements OnInit {
   deckId: string | null | undefined;
   deck: Deck | undefined;
   cards: Card[] = [];
-  /** length: 6 */
   cardsAreFlipped: boolean[] = [];
-  /** length: 6 */
   score: number;
   misses: number;
   showPopup: boolean = false;
@@ -26,6 +24,7 @@ export class GamePageComponent implements OnInit {
   lastSelectedCardIndex: number | null = null;
 
   //////////////////////////////////////////////////////////////////////////
+  // VARIÁVEIS QUE LIDAM COM OS MISSES
   showMissesPopup: boolean = false;
   missesListener(): boolean {
     return this.showMissesPopup;
@@ -124,8 +123,6 @@ export class GamePageComponent implements OnInit {
 
   cantFlipBecauseItsTheSameCard(index:number){ //este método deve rodar quando o usuário clicar 2 vezes na mesma carta...
     console.log('chamou cantFlipBecauseItsTheSameCard')
-
-    //@TODO: IMPLEMENTAR ESTE MÉTODO  E COLOCAR ELE NO MÉTODO "onCardClicked()"
     const lastSelectedCardIndex = this.selectedCardIndexes?.[this.selectedCardIndexes?.length - 1];
     if (lastSelectedCardIndex === index) {
       console.log('Não pode virar a carta atual, pois é a mesma carta que a última clicada.');
@@ -138,22 +135,14 @@ export class GamePageComponent implements OnInit {
 
 
   canFlipBecauseTwoCardsHaveBeenClicked(index:number){ //este método deve rodar quando o usuário clicar em 2 cartas, e acabar não dando match...
-    //@TODO: IMPLEMENTAR ESTE MÉTODO  E COLOCAR ELE NO MÉTODO "onCardClicked()"
     console.log('chamou canFlipBecauseTwoCardsHaveBeenClicked');
-
     const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length;
-
     if (this.selectedCardIndexes.includes(index)) {
       console.log('Não pode virar a carta atual, pois ela já está virada.');
       return false;
     }
     return flippedCardsCount <= 1; // se retornar true, pode virar a próxima carta, se retornar false, não pode virar a próxima carta...
   }
-
-
-
-
-
 
   /** Método auxiliar que verifica se as 2 cartas viradas são um Match (usado no onCardClicked()) */
   isMatch(): boolean {
@@ -197,19 +186,14 @@ export class GamePageComponent implements OnInit {
   }
 
   /** Método auxiliar que desvira as cartas, caso não tenha sido Match) */
-  //Este método precisa desvirar apenas as últimas 2 cartas que o usuário clicou, e não todas as cartas...
-  //Pois se este método desvirar todas as cartas, ele estaria zerando o jogo inteiro... E isso é errado.
   unflipCards(): void {
     console.log('chamou unflipCards')
     console.log('cards index para desvirar: ' + this.selectedCardIndexes);
-
     this.unflipCardsExecuted = true; // esta marcação indica que o método foi executado...
-
     setTimeout(() => {
       this.selectedCardIndexes.forEach(index => this.flipCard(index)); // desvira as cartas depois de 3 segundos
-
       this.unflipCardsExecuted = false; // depois que as cartas forem desviradas, precisamos indicar que o método deixou de ser executado...
-    }, 2000);
+    }, 1500);
   }
 
   showMessageBy2Seconds(message: string): void {
@@ -218,7 +202,6 @@ export class GamePageComponent implements OnInit {
       this.showMessage = undefined;
     }, 2000)
   }
-
 
   restartGame() {
     this.cardsAreFlipped = this.cards.map(() => false); //faz todos os cards ficarem false, ou seja, zera o jogo...
@@ -232,16 +215,5 @@ export class GamePageComponent implements OnInit {
       [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
     }
   }
-
-  //////////////////////////////////////////////////////////////////////////
-
-  // showPopUp() {
-  //   console.log('chamou showPopUp')
-  //   this.showPopup = true;
-  //   setTimeout(() => {
-  //     this.showPopup = false;
-  //   }, 2000);
-  // }
-
 
 }
