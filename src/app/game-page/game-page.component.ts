@@ -16,14 +16,11 @@ export class GamePageComponent implements OnInit {
   cardsAreFlipped: boolean[] = [];
   score: number;
   misses: number;
-  showPopup: boolean = false;
   unflipCardsExecuted: boolean = false;
-
   blockedCardIndexes: number[];
   showMessage?: string;
   lastSelectedCardIndex: number | null = null;
 
-  //////////////////////////////////////////////////////////////////////////
   // VARIÁVEIS QUE LIDAM COM OS MISSES
   showMissesPopup: boolean = false;
   missesListener(): boolean {
@@ -36,9 +33,6 @@ export class GamePageComponent implements OnInit {
     }, 1000);
   }
 
-  //////////////////////////////////////////////////////////////////////////
-
-
   get selectedCardIndexes(): number[] {
     return this.cardsAreFlipped
       .map((_, index) => index)
@@ -49,6 +43,7 @@ export class GamePageComponent implements OnInit {
     return this.cardsAreFlipped.filter((c) => c).length;
   }
 
+  /** Construtor */
   constructor(
     private route: ActivatedRoute, //este cara "ActivatedRoute" é usado para capturar valores da URL...
     private deckService: DeckService,
@@ -58,6 +53,7 @@ export class GamePageComponent implements OnInit {
     this.blockedCardIndexes = [];
   }
 
+  /** Método que inicia o código */
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.deckId = params.get('deckId');
@@ -71,7 +67,6 @@ export class GamePageComponent implements OnInit {
       }
     });
   }
-
 
   /** Método PRINCIPAL chamado sempre que um card é clicado */
   onCardClicked(index: number): void {
@@ -112,7 +107,6 @@ export class GamePageComponent implements OnInit {
     }
   }
 
-
   /** Método auxiliar para virar a carta (usado no onCardClicked()) */
   flipCard(index: number): void {
     console.log('chamou flipCard');
@@ -120,7 +114,7 @@ export class GamePageComponent implements OnInit {
   }
 
 
-
+  /** Método auxiliar que impede o usuário de clicar 2 vezes na mesma carta (flipar a mesma carta) */
   cantFlipBecauseItsTheSameCard(index:number){ //este método deve rodar quando o usuário clicar 2 vezes na mesma carta...
     console.log('chamou cantFlipBecauseItsTheSameCard')
     const lastSelectedCardIndex = this.selectedCardIndexes?.[this.selectedCardIndexes?.length - 1];
@@ -132,8 +126,7 @@ export class GamePageComponent implements OnInit {
     }
   }
 
-
-
+  /** Método auxiliar que checa se 2 foram clicadas */
   canFlipBecauseTwoCardsHaveBeenClicked(index:number){ //este método deve rodar quando o usuário clicar em 2 cartas, e acabar não dando match...
     console.log('chamou canFlipBecauseTwoCardsHaveBeenClicked');
     const flippedCardsCount = this.cardsAreFlipped.filter((c) => c).length;
